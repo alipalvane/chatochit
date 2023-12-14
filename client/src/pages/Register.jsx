@@ -3,10 +3,16 @@ import { Form, Row, Col, Stack, Button, Alert } from "react-bootstrap";
 import { AuthContext } from "../context/AuthContext";
 
 const Register = () => {
-  const { registerInfo, upadteRegisterInfo } = useContext(AuthContext);
+  const {
+    registerInfo,
+    upadteRegisterInfo,
+    registerUser,
+    registerError,
+    iseRegisterLoading,
+  } = useContext(AuthContext);
   return (
     <>
-      <Form>
+      <Form onSubmit={registerUser}>
         <Row
           style={{
             height: "100vh",
@@ -20,22 +26,41 @@ const Register = () => {
               <Form.Control
                 type="text"
                 placeholder="Name"
-                onChange={(e) => upadteRegisterInfo({
-                  ...registerInfo, name:e.target.value
-                })}
+                onChange={(e) =>
+                  upadteRegisterInfo({
+                    ...registerInfo,
+                    name: e.target.value,
+                  })
+                }
               />
-              <Form.Control type="email" placeholder="Email" onChange={(e) => upadteRegisterInfo({
-                  ...registerInfo, email:e.target.value
-                })}/>
-              <Form.Control type="password" placeholder="Password" onChange={(e) => upadteRegisterInfo({
-                  ...registerInfo, password:e.target.value
-                })}/>
+              <Form.Control
+                type="email"
+                placeholder="Email"
+                onChange={(e) =>
+                  upadteRegisterInfo({
+                    ...registerInfo,
+                    email: e.target.value,
+                  })
+                }
+              />
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                onChange={(e) =>
+                  upadteRegisterInfo({
+                    ...registerInfo,
+                    password: e.target.value,
+                  })
+                }
+              />
               <Button variant="primary" type="submit">
-                Register
+                {iseRegisterLoading ? "Creating Your  Account ..." : "Register"}
               </Button>
-              <Alert variant="danger">
-                <p>An Error Occured !</p>
-              </Alert>
+              {registerError?.error && (
+                <Alert variant="danger">
+                  <p>{registerError?.message}</p>
+                </Alert>
+              )}
             </Stack>
           </Col>
         </Row>
