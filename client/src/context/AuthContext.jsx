@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {createContext, useCallback, useEffect, useState} from "react";
 import {baseUrl, postRequset} from "../utils/services";
 
